@@ -54,7 +54,7 @@ abstract class RestVerticle : CoroutineVerticle() {
             it.addHeadersEndHandler { _ ->
                 val origin = it.request().getHeader("Origin")
                 if (origin != null && origin.isNotEmpty()) {
-                    var res = it.response()
+                    val res = it.response()
                     res.putHeader("Access-Control-Allow-Origin", origin)
                     res.putHeader("Access-Control-Allow-Credentials", "true")
                     res.putHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE")

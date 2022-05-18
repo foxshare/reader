@@ -31,8 +31,8 @@ export default new Vuex.Store({
     token:
       (window.localStorage && window.localStorage.getItem("api_token")) || "",
     bookSourceList: [],
-    isSecureMode: false,
-    isManagerMode: false,
+    isSecureMode: true,
+    isManagerMode: true,
     secureKey: "",
     userInfo: {},
     userList: [].concat(defaultNS),

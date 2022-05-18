@@ -13,26 +13,7 @@ RUN \
     rm src/main/java/com/htmake/reader/ReaderUIApplication.kt; \
     gradle -b cli.gradle assemble --info;
 
-# 建立一个新的镜像文件，配置模板：新建立的镜像是以centos为基础模板
-# 因为jdk必须运行在操作系统之上
-FROM centos:7.9.2009
-
-# 维护者
-MAINTAINER author <xxx@xx.com>
-
-# 创建一个新目录来存储jdk文件
-RUN mkdir /usr/local/java
-
-#将jdk压缩文件复制到镜像中，它将自动解压缩tar文件
-ADD jdk-11.0.10_linux-x64_bin.tar.gz /usr/local/java/
-
-# 设置环境变量
-ENV JAVA_HOME /usr/local/java/jdk-11.0.10
-ENV PATH $JAVA_HOME/bin:$PATH
-
-# 其效果是在主机 /var/lib/docker 目录下创建了一个临时文件，并链接到容器的/tmp
-VOLUME /tmp
-
+FROM openjdk:8-jdk-alpine
 # Install base packages
 RUN \
     # apk update; \

@@ -392,31 +392,6 @@
         </div>
         <div class="setting-wrapper">
           <div class="setting-title">
-            其它
-          </div>
-          <div class="setting-item">
-            <el-tag
-              type="info"
-              :effect="isNight ? 'dark' : 'light'"
-              slot="reference"
-              class="setting-btn"
-              @click="showMPCode"
-            >
-              关注公众号【假装大佬】
-            </el-tag>
-            <el-tag
-              type="info"
-              :effect="isNight ? 'dark' : 'light'"
-              slot="reference"
-              class="setting-btn"
-              @click="joinTGChannel"
-            >
-              加入TG频道【假装大佬】
-            </el-tag>
-          </div>
-        </div>
-        <div class="setting-wrapper">
-          <div class="setting-title">
             本地缓存
             <span class="right-text">{{ localCacheStats.total }}</span>
           </div>
@@ -1104,10 +1079,10 @@ import Explore from "../components/Explore.vue";
 import LocalStore from "../components/LocalStore.vue";
 import WebDAV from "../components/WebDAV.vue";
 import Axios from "../plugins/axios";
-import { errorTypeList } from "../plugins/config";
-import { setCache, getCache } from "../plugins/cache";
+import { errorTypeList } from "@/plugins/config";
+import { setCache, getCache } from "@/plugins/cache";
 import eventBus from "../plugins/eventBus";
-import { formatSize, LimitResquest } from "../plugins/helper";
+import { formatSize, LimitResquest } from "@/plugins/helper";
 const buildURL = require("axios/lib/helpers/buildURL");
 import { isInContainer } from "element-ui/src/utils/dom";
 
@@ -2847,12 +2822,6 @@ export default {
     },
     showUserManageDialog() {
       eventBus.$emit("showUserManageDialog");
-    },
-    showMPCode() {
-      eventBus.$emit("showMPCodeDialog");
-    },
-    joinTGChannel() {
-      window.open("https://t.me/facker_channel", "_target");
     },
     ensureLoadBookCover() {
       // 手动触发滚动事件，显示书籍封面图片

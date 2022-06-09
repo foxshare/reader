@@ -69,8 +69,6 @@
 
     <ReplaceRule v-model="showReplaceRuleDialog" />
 
-    <MPCode v-model="showMPCodeDialog" />
-
     <BookInfo v-model="showBookInfoDialog" />
 
     <UserManage v-model="showUserManageDialog" />
@@ -87,7 +85,6 @@ import eventBus from "./plugins/eventBus";
 import ImageViewer from "element-ui/packages/image/src/image-viewer.vue";
 import ReplaceRule from "./components/ReplaceRule.vue";
 import ReplaceRuleForm from "./components/ReplaceRuleForm.vue";
-import MPCode from "./components/MPCode.vue";
 import BookInfo from "./components/BookInfo.vue";
 import UserManage from "./components/UserManage.vue";
 import AddUser from "./components/AddUser.vue";
@@ -158,7 +155,6 @@ export default {
     ImageViewer,
     ReplaceRule,
     ReplaceRuleForm,
-    MPCode,
     BookInfo,
     UserManage,
     AddUser,
@@ -181,8 +177,6 @@ export default {
       showReplaceRuleForm: false,
       replaceRule: {},
       isAddReplaceRule: true,
-
-      showMPCodeDialog: false,
 
       showBookInfoDialog: false,
 
@@ -274,9 +268,6 @@ export default {
     eventBus.$on("showReplaceRuleForm", this.showReplaceRuleFormListener);
     eventBus.$on("showReplaceRuleDialog", () => {
       this.showReplaceRuleDialog = true;
-    });
-    eventBus.$on("showMPCodeDialog", () => {
-      this.showMPCodeDialog = true;
     });
     eventBus.$on("showBookInfoDialog", book => {
       this.showBookInfo = book;

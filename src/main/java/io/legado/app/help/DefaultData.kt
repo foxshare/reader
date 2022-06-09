@@ -10,7 +10,9 @@ object DefaultData {
     const val txtTocRuleFileName = "txtTocRule.json"
 
     val txtTocRules: List<TxtTocRule> by lazy {
-        val json = String(DefaultData::class.java.getResource("${File.separator}defaultData${File.separator}$txtTocRuleFileName").readBytes())
+        val json =
+            DefaultData::class.java.getResource("${File.separator}defaultData${File.separator}$txtTocRuleFileName")
+                ?.let { String(it.readBytes()) }
         GSON.fromJsonArray<TxtTocRule>(json).getOrNull() ?: emptyList()
     }
 

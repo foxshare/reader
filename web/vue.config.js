@@ -1,5 +1,5 @@
 // vue.config.js
-var packageInfo = require("./package.json");
+const packageInfo = require("./package.json");
 
 function buildVersion() {
   const now = new Date();

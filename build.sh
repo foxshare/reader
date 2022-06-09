@@ -79,22 +79,6 @@ case $task in
         ./gradlew -b cli.gradle $@
         mv src/main/java/com/htmake/reader/ReaderUIApplication.kt.back src/main/java/com/htmake/reader/ReaderUIApplication.kt
     ;;
-    yarn)
-        # yarn 快捷命令，默认 install
-        shift
-        cd web
-        yarn $@
-    ;;
-    web)
-        # 开发web页面
-        cd web
-        yarn serve
-    ;;
-    sync)
-        # 编译同步web资源
-        cd web
-        yarn sync
-    ;;
     *)
         echo "
 USAGE: ./build.sh build|run|win|linux|mac|serve|cli|yarn|web|sync

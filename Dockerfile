@@ -1,9 +1,3 @@
-FROM node:lts-alpine3.14 AS build-web
-ADD . /app
-WORKDIR /app/web
-# Build web
-RUN yarn && yarn build
-
 # Build jar
 FROM gradle:6.1.1-jdk8 AS build-env
 ADD --chown=gradle:gradle . /app

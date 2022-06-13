@@ -102,7 +102,7 @@ class ReaderUIApplication: Application() {
                     logger.info("debug: {}", debug)
                     var serverPort = env.getProperty("reader.server.port", Int::class.java)
                     logger.info("serverPort: {}", serverPort)
-                    var port = 8080
+                    var port = 9898
                     if (serverPort != null && serverPort > 0) {
                         port = serverPort;
                     }

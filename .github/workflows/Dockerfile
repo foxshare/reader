@@ -12,7 +12,7 @@ RUN \
 # 时区
 ENV TZ=Asia/Shanghai
 
-EXPOSE 8080
+EXPOSE 9898
 ENTRYPOINT ["/sbin/tini", "--"]
 ADD ./reader.jar /app/bin/reader.jar
 CMD ["java", "-jar", "/app/bin/reader.jar" ]

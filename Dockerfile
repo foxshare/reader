@@ -2,7 +2,6 @@
 FROM gradle:6.1.1-jdk8 AS build-env
 ADD --chown=gradle:gradle . /app
 WORKDIR /app
-COPY --from=build-web /app/web/dist /app/src/main/resources/web
 RUN \
     rm src/main/java/com/htmake/reader/ReaderUIApplication.kt; \
     gradle -b cli.gradle assemble --info; \
@@ -26,7 +25,7 @@ ENV TZ=Asia/Shanghai
 #  && echo Asia/Shanghai > /etc/timdezone \
 #  && dpkg-reconfigure -f noninteractive tzdata
 
-EXPOSE 8080
+EXPOSE 80
 ENTRYPOINT ["/sbin/tini", "--"]
 # COPY --from=hengyunabc/arthas:latest /opt/arthas /opt/arthas
 COPY --from=build-env /app/build/libs/reader.jar /app/bin/reader.jar

@@ -33,7 +33,7 @@ case $task in
         # 运行 javafx UI
         port=$2
         if [[ -z "$port" ]]; then
-            port=8080
+            port=9898
         fi
         ./gradlew assemble --info
         if test $? -eq 0; then
@@ -58,7 +58,7 @@ case $task in
         # 服务端一键运行
         port=$2
         if [[ -z "$port" ]]; then
-            port=8080
+            port=9898
         fi
         mv src/main/java/com/htmake/reader/ReaderUIApplication.kt src/main/java/com/htmake/reader/ReaderUIApplication.kt.back
         getVersion ./cli.gradle

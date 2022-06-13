@@ -1,6 +1,6 @@
 reader:
   app:
-    storagePath: c/user/storage
+    storagePath: storage
     showUI: false
     debug: false
     packaged: false
@@ -20,7 +20,7 @@ reader:
     autoClearInactiveUser: 0
 
   server:
-    port: 8080
+    port: 9898
     webUrl: http://localhost:${reader.server.port}
 
 logging:

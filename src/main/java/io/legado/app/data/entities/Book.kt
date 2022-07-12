@@ -10,6 +10,7 @@ import io.legado.app.utils.FileUtils
 import io.legado.app.model.localBook.LocalBook
 import io.legado.app.model.localBook.EpubFile
 import io.legado.app.model.localBook.UmdFile
+import io.legado.app.model.localBook.CbzFile
 import java.nio.charset.Charset
 import java.io.File
 import kotlin.math.max
@@ -17,58 +18,40 @@ import kotlin.math.min
 import org.jsoup.Jsoup
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(
-    "variableMap",
-    "infoHtml",
-    "tocHtml",
-    "config",
-    "rootDir",
-    "readConfig",
-    "localBook",
-    "epub",
-    "epubRootDir",
-    "onLineTxt",
-    "localTxt",
-    "umd",
-    "realAuthor",
-    "unreadChapterNum",
-    "folderName",
-    "localFile",
-    "kindList"
-)
+@JsonIgnoreProperties("variableMap", "infoHtml", "tocHtml", "config", "rootDir", "readConfig", "localBook", "epub", "epubRootDir", "onLineTxt", "localTxt", "umd", "realAuthor", "unreadChapterNum", "folderName", "localFile", "kindList", "_userNameSpace", "bookDir", "userNameSpace")
 data class Book(
-    override var bookUrl: String = "",                   // 详情页Url(本地书源存储完整文件路径)
-    var tocUrl: String = "",                    // 目录页Url (toc=table of Contents)
-    var origin: String = BookType.local,        // 书源URL(默认BookType.local)
-    var originName: String = "",                //书源名称
-    override var name: String = "",                   // 书籍名称(书源获取)
-    override var author: String = "",                 // 作者名称(书源获取)
-    override var kind: String? = null,                    // 分类信息(书源获取)
-    var customTag: String? = null,              // 分类信息(用户修改)
-    var coverUrl: String? = null,               // 封面Url(书源获取)
-    var customCoverUrl: String? = null,         // 封面Url(用户修改)
-    var intro: String? = null,            // 简介内容(书源获取)
-    var customIntro: String? = null,      // 简介内容(用户修改)
-    var charset: String? = null,                // 自定义字符集名称(仅适用于本地书籍)
-    var type: Int = 0,                          // @BookType
-    var group: Int = 0,                         // 自定义分组索引号
-    var latestChapterTitle: String? = null,     // 最新章节标题
-    var latestChapterTime: Long = System.currentTimeMillis(),            // 最新章节标题更新时间
-    var lastCheckTime: Long = System.currentTimeMillis(),                // 最近一次更新书籍信息的时间
-    var lastCheckCount: Int = 0,                // 最近一次发现新章节的数量
-    var totalChapterNum: Int = 0,               // 书籍目录总数
-    var durChapterTitle: String? = null,        // 当前章节名称
-    var durChapterIndex: Int = 0,               // 当前章节索引
-    var durChapterPos: Int = 0,                 // 当前阅读的进度(首行字符的索引位置)
-    var durChapterTime: Long = System.currentTimeMillis(),               // 最近一次阅读书籍的时间(打开正文的时间)
-    override var wordCount: String? = null,
-    var canUpdate: Boolean = true,              // 刷新书架时更新书籍信息
-    var order: Int = 0,                         // 手动排序
-    var originOrder: Int = 0,                   //书源排序
-    var useReplaceRule: Boolean = true,         // 正文使用净化替换规则
-    var variable: String? = null,                // 自定义书籍变量信息(用于书源规则检索书籍信息)
-    var readConfig: ReadConfig? = null
-) : BaseBook {
+        override var bookUrl: String = "",                   // 详情页Url(本地书源存储完整文件路径)
+        var tocUrl: String = "",                    // 目录页Url (toc=table of Contents)
+        var origin: String = BookType.local,        // 书源URL(默认BookType.local)
+        var originName: String = "",                //书源名称
+        override var name: String = "",                   // 书籍名称(书源获取)
+        override var author: String = "",                 // 作者名称(书源获取)
+        override var kind: String? = null,                    // 分类信息(书源获取)
+        var customTag: String? = null,              // 分类信息(用户修改)
+        var coverUrl: String? = null,               // 封面Url(书源获取)
+        var customCoverUrl: String? = null,         // 封面Url(用户修改)
+        var intro: String? = null,            // 简介内容(书源获取)
+       var customIntro: String? = null,      // 简介内容(用户修改)
+       var charset: String? = null,                // 自定义字符集名称(仅适用于本地书籍)
+        var type: Int = 0,                          // @BookType
+       var group: Int = 0,                         // 自定义分组索引号
+        var latestChapterTitle: String? = null,     // 最新章节标题
+        var latestChapterTime: Long = System.currentTimeMillis(),            // 最新章节标题更新时间
+        var lastCheckTime: Long = System.currentTimeMillis(),                // 最近一次更新书籍信息的时间
+        var lastCheckCount: Int = 0,                // 最近一次发现新章节的数量
+        var totalChapterNum: Int = 0,               // 书籍目录总数
+       var durChapterTitle: String? = null,        // 当前章节名称
+       var durChapterIndex: Int = 0,               // 当前章节索引
+       var durChapterPos: Int = 0,                 // 当前阅读的进度(首行字符的索引位置)
+       var durChapterTime: Long = System.currentTimeMillis(),               // 最近一次阅读书籍的时间(打开正文的时间)
+        override var wordCount: String? = null,
+       var canUpdate: Boolean = true,              // 刷新书架时更新书籍信息
+       var order: Int = 0,                         // 手动排序
+       var originOrder: Int = 0,                   //书源排序
+        var useReplaceRule: Boolean = true,         // 正文使用净化替换规则
+        var variable: String? = null,                // 自定义书籍变量信息(用于书源规则检索书籍信息)
+        var readConfig: ReadConfig? = null
+    ) : BaseBook {
 
     fun isLocalBook(): Boolean {
         return origin == BookType.local
@@ -131,6 +114,10 @@ data class Book(
 
     fun getUnreadChapterNum() = max(totalChapterNum - durChapterIndex - 1, 0)
 
+    fun getDisplayCover() = if (customCoverUrl.isNullOrEmpty()) coverUrl else customCoverUrl
+
+    fun getDisplayIntro() = if (customIntro.isNullOrEmpty()) intro else customIntro
+
     fun fileCharset(): Charset {
         return charset(charset ?: "UTF-8")
     }
@@ -170,11 +157,30 @@ data class Book(
     }
 
     fun getLocalFile(): File {
-        if (isEpub() && originName.indexOf("localStore") < 0) {
-            // 非本地书仓的 epub文件
+        if (isEpub() && originName.indexOf("localStore") < 0 && originName.indexOf("webdav") < 0) {
+            // 非本地/webdav书仓的 epub文件
             return FileUtils.getFile(File(rootDir + originName), "index.epub")
         }
+        if (isCbz() && originName.indexOf("localStore") < 0 && originName.indexOf("webdav") < 0) {
+            // 非本地/webdav书仓的 cbz文件
+            return FileUtils.getFile(File(rootDir + originName), "index.cbz")
+        }
         return File(rootDir + originName)
+    }
+
+    @Transient
+    private var _userNameSpace: String = ""
+
+    fun setUserNameSpace(nameSpace: String) {
+        _userNameSpace = nameSpace
+    }
+
+    fun getUserNameSpace(): String {
+        return _userNameSpace
+    }
+
+    fun getBookDir(): String {
+        return FileUtils.getPath(File(rootDir), "storage", "data", _userNameSpace, name + "_" + author)
     }
 
     fun getSplitLongChapter(): Boolean {
@@ -183,20 +189,20 @@ data class Book(
 
     fun toSearchBook(): SearchBook {
         return SearchBook(
-            name = name,
-            author = author,
-            kind = kind,
-            bookUrl = bookUrl,
-            origin = origin,
-            originName = originName,
-            type = type,
-            wordCount = wordCount,
-            latestChapterTitle = latestChapterTitle,
-            coverUrl = coverUrl,
-            intro = intro,
-            tocUrl = tocUrl,
+                name = name,
+                author = author,
+                kind = kind,
+                bookUrl = bookUrl,
+                origin = origin,
+                originName = originName,
+                type = type,
+                wordCount = wordCount,
+                latestChapterTitle = latestChapterTitle,
+                coverUrl = coverUrl,
+                intro = intro,
+                tocUrl = tocUrl,
 //                originOrder = originOrder,
-            variable = variable
+                variable = variable
         ).apply {
             this.infoHtml = this@Book.infoHtml
             this.tocHtml = this@Book.tocHtml
@@ -210,18 +216,17 @@ data class Book(
         val defaultPath = "OEBPS"
 
         // 根据 META-INF/container.xml 来获取 contentOPF 位置
-        val containerRes =
-            File(bookUrl + File.separator + "index" + File.separator + "META-INF" + File.separator + "container.xml")
+        val containerRes = File(bookUrl + File.separator + "index" + File.separator + "META-INF" + File.separator + "container.xml")
         if (containerRes.exists()) {
             try {
                 val document = Jsoup.parse(containerRes.readText())
                 val rootFileElement = document
-                    .getElementsByTag("rootfiles").get(0)
-                    .getElementsByTag("rootfile").get(0);
+                        .getElementsByTag("rootfiles").get(0)
+                        .getElementsByTag("rootfile").get(0);
                 val result = rootFileElement.attr("full-path");
                 System.out.println("result: " + result)
                 if (result != null && result.isNotEmpty()) {
-                    return File(result).parentFile?.let {
+                    return File(result).parentFile?.let{
                         it.toString()
                     } ?: ""
                 }
@@ -241,8 +246,10 @@ data class Book(
                 EpubFile.upBookInfo(this, onlyCover)
             } else if (isUmd()) {
                 UmdFile.upBookInfo(this, onlyCover)
+            } else if (isCbz()) {
+                CbzFile.upBookInfo(this, onlyCover)
             }
-        } catch (e: Exception) {
+        } catch(e: Exception) {
             e.printStackTrace()
         }
     }
